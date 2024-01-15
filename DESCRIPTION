@@ -1,0 +1,21 @@
+Package: bannr
+Title: Pull Data from Banner
+Version: 0.1.0
+Authors@R: 
+    person("James", "Clawson", , "clawson@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0009-0008-6756-0607"))
+Description: Log in to Banner Web to pull data on course enrollments and attendances. Using rvest and tidyverse tools, bannr helps course instructors get clean, actionable data on their courses, their students, and other information that can otherwise only be navigated via the web.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+Imports: 
+    dplyr,
+    keyring,
+    lubridate,
+    purrr,
+    rstudioapi,
+    rvest,
+    stringr,
+    tibble,
+    tidyr
