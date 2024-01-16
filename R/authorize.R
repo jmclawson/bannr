@@ -1,24 +1,3 @@
-#' Set required values
-#'
-#' `setup()` stores key values for logging into Banner, including the institutional URL, the current term, and others. The user will also be prompted to store a login username and password in the system keychain.
-#' 
-#' @section Required values: 
-#' Values requested at this stage include the following:
-#' 
-#' 1. The **base url** of a Banner instance, used when navigating by web browser
-#' 2. The **current term** used internally by Banner. This might take the form of something like "202420" for the second semester of the 2023-2024 academic year.
-#' 3. For the **login page**, any url details added to the base url. Once the base url has been entered, this value has a suggested value.
-#' 4. For the *course rosters page*, any url details added to the base url. Once the base url has been entered, this value has a suggested value.
-#' 5. For the *attendance rosters page*, any url details added to the base url. Once the base url has been entered, this value has a suggested value.
-#' 6. The **username** and **password** used to log in to the system.
-#' 
-#' @section Security considerations: 
-#' The first five values, above, should not be considered sensitive information. They are stored as environmental variables. The **username** and **password** requested in the final step are given heightened security consideration and are saved in your computer system's keyring, provided it has been set up.
-#'
-#' @param reset Indicates whether previous values should be ignored.
-#'
-#' @returns A message indicating completion
-#' @export
 setup <- function(reset = FALSE){
   if (identical(Sys.getenv("bannr_url_base"),"") | reset) {
     if (utils::menu(c("Set it now", "Don't set it now"), title = "No base URL has been saved. For `bannr` to work well, it should be saved as an environmental variable.") == 1) {
@@ -84,7 +63,26 @@ setup <- function(reset = FALSE){
 
 #' Log in to Banner
 #'
-#' `authorize()` uses values stored during setup to authorize a browsing session in Banner.
+#' `authorize()` uses stored values to authorize a browsing session in Banner.
+#'
+#' @section On first run:
+#' The first time `authorize()` is run, it will request and store key values for logging into Banner, including the institutional URL, the current term, and others. The user will also be prompted to store a login username and password in the system keychain.
+#' 
+#' @section First-run details requested: 
+#' Values requested at this stage include the following:
+#' 
+#' 1. The **base url** of a Banner instance, used when navigating by web browser
+#' 2. The **current term** used internally by Banner. This might take the form of something like "202420" for the second semester of the 2023-2024 academic year.
+#' 3. For the **login page**, any url details added to the base url. Once the base url has been entered, a value is suggested.
+#' 4. For the *course rosters page*, any url details added to the base url. Once the base url has been entered, a value is suggested.
+#' 5. For the *attendance rosters page*, any url details added to the base url. Once the base url has been entered, a value is suggested.
+#' 6. The **username** used to log in to Banner.
+#' 7. The **password** used to log in to Banner.
+#' 
+#' @section Security considerations: 
+#' The first five values are not sensitive, but the last two certainly are. The first five are stored as environmental variables. Meanwhile, the **username** and **password** are treated with heightened security, manged using [rstudioapi::askForSecret()] and, potentially, stored by it in the system keyring.
+#'
+#' @param reset Indicates previous values should be ignored and overwritten.
 #'
 #' @returns An `rvest` session
 #' @export
@@ -93,8 +91,8 @@ setup <- function(reset = FALSE){
 #' \dontrun{
 #'   my_session <- authorize()
 #' }
-authorize <- function(){
-  check_setup("bannr_url_login")
+authorize <- function(reset = FALSE){
+  check_setup("bannr_url_login", reset)
 
   key_list <- keyring::key_list("RStudio Keyring Secrets")$username
   if ("bannr_username" %in% key_list) {
@@ -138,5 +136,15 @@ check_login <- function(.session){
 
   if (is_login_page) {
     stop("You've been logged out.\nUse `authorize()` and try again.", call. = FALSE)
+  }
+}
+
+check_setup <- function(detail = "bannr_url_login", reset = FALSE){
+  if (identical(Sys.getenv(detail),"")) {
+    message("The `bannr` package hasn't yet been set up.\nPlease answer the following questions to speed up future uses of the `authorize()` function.")
+    setup()
+  } else if (reset) {
+    message("Reset requested.\nPlease answer the following questions to speed up future uses of the `authorize()` function.")
+    setup(reset)
   }
 }

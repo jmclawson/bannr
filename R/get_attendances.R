@@ -107,7 +107,7 @@ process_attendances <- function(
     dplyr::select(-c(day, days)) |>
     tidyr::pivot_wider(names_from = date) |>
     dplyr::mutate(
-      rate = dplyr::case_when(!is.nan(rate) ~ rate),
+      attend_rate = dplyr::case_when(!is.nan(attend_rate) ~ attend_rate),
       attend_last = dplyr::case_when(!is.infinite(attend_last) ~ attend_last))
 
   processed <-

@@ -4,14 +4,41 @@
 \alias{authorize}
 \title{Log in to Banner}
 \usage{
-authorize()
+authorize(reset = FALSE)
+}
+\arguments{
+\item{reset}{Indicates previous values should be ignored and overwritten.}
 }
 \value{
 An \code{rvest} session
 }
 \description{
-\code{authorize()} uses values stored during setup to authorize a browsing session in Banner.
+\code{authorize()} uses stored values to authorize a browsing session in Banner.
 }
+\section{On first run}{
+
+The first time \code{authorize()} is run, it will request and store key values for logging into Banner, including the institutional URL, the current term, and others. The user will also be prompted to store a login username and password in the system keychain.
+}
+
+\section{First-run details requested}{
+
+Values requested at this stage include the following:
+\enumerate{
+\item The \strong{base url} of a Banner instance, used when navigating by web browser
+\item The \strong{current term} used internally by Banner. This might take the form of something like "202420" for the second semester of the 2023-2024 academic year.
+\item For the \strong{login page}, any url details added to the base url. Once the base url has been entered, a value is suggested.
+\item For the \emph{course rosters page}, any url details added to the base url. Once the base url has been entered, a value is suggested.
+\item For the \emph{attendance rosters page}, any url details added to the base url. Once the base url has been entered, a value is suggested.
+\item The \strong{username} used to log in to Banner.
+\item The \strong{password} used to log in to Banner.
+}
+}
+
+\section{Security considerations}{
+
+The first five values are not sensitive, but the last two certainly are. The first five are stored as environmental variables. Meanwhile, the \strong{username} and \strong{password} are treated with heightened security, manged using \code{\link[rstudioapi:askForSecret]{rstudioapi::askForSecret()}} and, potentially, stored by it in the system keyring.
+}
+
 \examples{
 \dontrun{
   my_session <- authorize()

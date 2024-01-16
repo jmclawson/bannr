@@ -34,7 +34,7 @@ flatten_roster <- function(roster) {
       end = roster$schedule[3],
       .before = name)
 
-  if (nrow(roster$attendance) > 0) {
+  if ("attendance" %in% names(roster)) {
     attendance <- roster$attendance |>
       tidyr::separate_wider_regex(
         NAMEID,

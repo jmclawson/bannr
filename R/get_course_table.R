@@ -58,8 +58,3 @@ get_course_table <- function(.session){
   course_table
 }
 
-check_setup <- function(detail = "bannr_url_login"){
-  if (identical(Sys.getenv(detail),"")) {
-    stop("The `bannr` package hasn't yet been set up.\nPlease run `setup()` before continuing.")
-  }
-}
