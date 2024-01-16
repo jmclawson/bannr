@@ -1,6 +1,19 @@
 #' Set required values
 #'
 #' `setup()` stores key values for logging into Banner, including the institutional URL, the current term, and others. The user will also be prompted to store a login username and password in the system keychain.
+#' 
+#' @section Required values: 
+#' Values requested at this stage include the following:
+#' 
+#' 1. The **base url** of a Banner instance, used when navigating by web browser
+#' 2. The **current term** used internally by Banner. This might take the form of something like "202420" for the second semester of the 2023-2024 academic year.
+#' 3. For the **login page**, any url details added to the base url. Once the base url has been entered, this value has a suggested value.
+#' 4. For the *course rosters page*, any url details added to the base url. Once the base url has been entered, this value has a suggested value.
+#' 5. For the *attendance rosters page*, any url details added to the base url. Once the base url has been entered, this value has a suggested value.
+#' 6. The **username** and **password** used to log in to the system.
+#' 
+#' @section Security considerations: 
+#' The first five values, above, should not be considered sensitive information. They are stored as environmental variables. The **username** and **password** requested in the final step are given heightened security consideration and are saved in your computer system's keyring, provided it has been set up.
 #'
 #' @param reset Indicates whether previous values should be ignored.
 #'
