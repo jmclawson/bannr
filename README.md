@@ -25,14 +25,14 @@ devtools::install_github("jmclawson/bannr")
 
 ## Using the package
 
-After installation, key values are stored using the `setup()` function:
+After installation, load the package with `library()`:
 
 ``` r
 library(bannr)
-setup()
 ```
 
-After setup, use package functions to access needed information.
+On first use, the `authorize()` function will request and store some key
+values before logging in to Banner.
 
 ``` r
 current_session <- authorize()
