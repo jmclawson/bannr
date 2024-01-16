@@ -1,0 +1,71 @@
+	var nowCRN = classCurrent();
+		
+	function classCurrent() {// figure out the current class
+		if (day == 1 || day == 3) {// Taking care of M/W
+			var nowCRN = classCheck(2);
+		} else if (day == 2 || day == 4) {// Taking care of T/Th
+			var nowCRN = classCheck(3);
+		} else if (day == 1 || day == 3 || day == 5) {// Taking care of M/W/F
+			var nowCRN = classCheck(1);
+		} else var nowCRN = "null";
+		return nowCRN;
+	}
+	
+	function classCheck(day) {
+		var i = 0;
+		while (i < 3) {
+			if (classDay[i]==day && nowTime.getTime() > classStart[i].getTime() && classEnd[i].getTime() > nowTime.getTime()) {
+				var nowCRN = classCRN[i];
+				var i = 3;
+			} else { 
+				var nowCRN = "null"
+				i++; }
+		}
+		return nowCRN;
+	}
+			
+	function dateObj(d) { // date parser ...
+	    var parts = d.split(/:|\s/),
+	        date  = new Date();
+	    if (parts.pop().toLowerCase() == 'pm') parts[0] = (+parts[0]) + 12;
+	    date.setHours(+parts.shift());
+	    date.setMinutes(+parts.shift());
+	    return date;
+	}
+		
+	function urlAppend(crn) {
+		var urlSuffix = "&crn=" + crn + "&in_attd_date_month=" + MM + "&in_attd_date_day=" + DD;
+		return urlSuffix;
+	}
+	
+	function formatAMPM(date) {
+		var hours = date.getHours();
+		var minutes = date.getMinutes();
+		var ampm = hours >= 12 ? 'PM' : 'AM';
+		hours = hours % 12;
+		hours = hours ? hours : 12; // the hour '0' should be '12'-- but 12 shouldn't be 0. What did I do wrong?
+		minutes = minutes < 10 ? '0'+minutes : minutes;
+		var strTime = hours + ':' + minutes + ' ' + ampm;
+		return strTime;
+	}
+	
+	function formatNoAMPM(date) {
+		var hours = date.getHours();
+		var minutes = date.getMinutes();
+		var ampm = hours >= 12 ? 'PM' : 'AM';
+		hours = hours % 12;
+		hours = hours ? hours : 12; // the hour '0' should be '12'-- but 12 shouldn't be 0. What did I do wrong?
+		minutes = minutes < 10 ? '0'+minutes : minutes;
+		var strTime = hours + ':' + minutes;
+		return strTime;
+	}
+	
+	var attendNow = attendURL + urlAppend(crn=classCurrent());
+
+	if (classCurrent() == "null") {
+		document.getElementById("now").style.display="none";
+	}
+	else {
+		document.getElementById("now").setAttribute("href", attendNow);
+	}		
+	document.getElementById("now").innerHTML += " (CRN:" + classCurrent() + ")";

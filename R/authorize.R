@@ -15,6 +15,7 @@ setup <- function(reset = FALSE){
   this_term <- Sys.getenv("bannr_term")
   url_login <- paste0(url_base, "twbkwbis.P_WWWLogin")
   url_rosters <- paste0(url_base, "bzlkfcwl.P_FacClaListSum?term=", this_term)
+  url_attendance_take <- paste0(url_base, "bzlkattd.p_class_attendance?term=", this_term)
   url_attendances <- paste0(url_base, "bzlkrost.P_ViewRoster?term=", this_term)
 
   if (identical(Sys.getenv("bannr_url_login"),"") | reset) {
@@ -35,8 +36,17 @@ setup <- function(reset = FALSE){
     }
   }
 
+  if (identical(Sys.getenv("bannr_url_attendance_take"),"") | reset) {
+    prompt_response <- utils::menu(c("Use recommended URL", "Set it to something else", "Don't set it now"), title = paste("No URL for taking attendance has been set yet. For `bannr` to work well, it should be saved as an environmental variable. The recommended attendance-taking URL is", url_attendance_take))
+    if (prompt_response == 1) {
+      Sys.setenv("bannr_url_attendance_take" = url_attendance_take)
+    } else if (prompt_response == 2) {
+      Sys.setenv("bannr_url_attendance_take" = readline("What's the URL for taking attendance?"))
+    }
+  }
+  
   if (identical(Sys.getenv("bannr_url_attendances"),"") | reset) {
-    prompt_response <- utils::menu(c("Use recommended URL", "Set it to something else", "Don't set it now"), title = paste("No attendance URL has been set yet. For `bannr` to work well, it should be saved as an environmental variable. The recommended attendance URL is", url_attendances))
+    prompt_response <- utils::menu(c("Use recommended URL", "Set it to something else", "Don't set it now"), title = paste("No URL for viewing attendance rosters has been set yet. For `bannr` to work well, it should be saved as an environmental variable. The recommended attendance roster URL is", url_attendances))
     if (prompt_response == 1) {
       Sys.setenv("bannr_url_attendances" = url_attendances)
     } else if (prompt_response == 2) {

@@ -1,0 +1,11 @@
+		document.getElementById(cssIDs[i]).setAttribute("href", (attendURL + urlAppend(classCRN[i])));
+		document.getElementById(cssIDs[i]).innerHTML = className[i];
+	}
+	
+	document.getElementById("test").innerHTML += attendNow;
+	
+	document.getElementByID("now").addClass(classCurrent());
+	
+	
+	function rosterList() {
+		var rosterLinks = "";

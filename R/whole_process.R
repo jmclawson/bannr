@@ -31,4 +31,6 @@ get_course_records <- function() {
     process_attendances()
 }
 
+# processed <- get_course_records()
+
 # banner_data <- get_course_records()

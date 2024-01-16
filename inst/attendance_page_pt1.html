@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<style>
+		.current{
+			font-style: italic;
+		}
+		.currently {
+		  height: 222px;
+		}
+		#now{
+			padding: 1em;
+			margin-top: 1em;
+			text-align: center;
+			background-color: #afa;
+			border-radius: 2em;
+		}
+		#now:hover{
+			background-color: #0f0;
+		}
+		body{
+/*			margin-left: 2em;*/
+			margin: 0 auto;
+			max-width: 600px;
+			text-align: center;
+			line-height: 2em;
+			font-family: Sans-Serif;
+		}
+		.courses{
+			float: left;
+			width: 390px;
+			text-align: left;
+			margin-right: 0.7em;
+			counter-reset: course;
+		}
+		.status{
+			text-align: left;
+			display: block;
+		}
+		.page {
+			padding-top: 0.3em;
+		}
+		.class-title {
+		  margin: auto;
+		  font-weight: bold;
+		}
+		.class-time {
+		  display: block;
+		  position: absolute;
+		  vertical-align: top;
+		  text-align: right;
+		  margin-top: -120px;
+		  margin-left: 120px;
+		}
+		.class-catalog {
+		  display: block;
+		  position: absolute;
+		  vertical-align: top;
+		  text-align: left;
+		  margin-top: 120px;
+		  margin-left: 15px;
+		}
+		div.courses h2 {
+		  clear: both;
+		}
+		ul {
+			list-style-type: none;
+			padding-inline-start: 5%;
+		}
+		div.courses ul {
+		  overflow: hidden;
+		  display: flex;
+		  flex-wrap: wrap;
+		  clear: both;
+		}
+		div.courses ul li a::before {
+		  counter-increment: course;
+		  content: counter(course) ". ";
+		  position: absolute;
+		  vertical-align: top;
+		  margin-top: -120px;
+		  margin-left: 15px;
+		  font-size: 2.3em;
+		  color: white;
+		  text-shadow: 3px 3px 4px #aaaadd, 3px -3px 4px #aaaadd, -3px 3px 4px #aaaadd, -3px -3px 4px #aaaadd;
+		}
+		div.courses ul li a:hover::before {
+		  text-shadow: 3px 3px 4px #aaddaa, 3px -3px 4px #aaddaa, -3px 3px 4px #aaddaa, -3px -3px 4px #aaddaa;
+		}
+		div.courses ul li a:active::before {
+		  text-shadow: 3px 3px 4px #ddaaaa, 3px -3px 4px #ddaaaa, -3px 3px 4px #ddaaaa, -3px -3px 4px #ddaaaa;
+		}
+		div.courses ul li a {
+		  float: left;
+		  display: flex;
+		  align-items: center;
+		  list-style: none;
+		  text-align: center;
+		  margin-right: 0.25em;
+		  margin-bottom: 0.25em;
+		  height: 170px;
+		  border-radius: 1em;
+		  width: 180px;
+		  text-decoration: none;
+		  color: black;
+		}
+		div.courses ul li a, .rosters a {
+		  background-color: #EEEEFF;
+		}
+		div.courses ul li a:hover, .rosters a:hover {
+		  background-color: #DDFFDD;
+		}
+		div.courses ul li a:active, .rosters a:active {
+		  background-color: #FFDDDD;
+		}
+		div.rosters a:hover {
+		  text-shadow: 3px 3px 4px #aaddaa, 3px -3px 4px #aaddaa, -3px 3px 4px #aaddaa, -3px -3px 4px #aaddaa;
+		}
+		div.rosters a:active {
+		  text-shadow: 3px 3px 4px #ddaaaa, 3px -3px 4px #ddaaaa, -3px 3px 4px #ddaaaa, -3px -3px 4px #ddaaaa;
+		}
+		.rosters a {
+		  width: 2em;
+		  height: 2.2em;
+		  display: inline-block;
+		  align-items: center;
+		  text-align: center;
+		  border-radius: 0.7em;
+		  text-decoration: none;
+		  color: white;
+		  text-shadow: 2px 2px 3px #7777cc, 2px -2px 3px #7777cc, -2px 2px 3px #7777cc, -2px -2px 3px #7777cc;
+		}
+		#outer {
+/*			margin: 0 auto;*/
+		}
+	</style>
+
+<base target="attendance">
+
+<title>Attendance Dashboard</title>
+
+</head>
+
+<body>
+<div id="outer">

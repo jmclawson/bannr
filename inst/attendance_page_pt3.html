@@ -1,0 +1,13 @@
+</div>
+
+<script>
+	var today = new Date();
+	var dd = today.getDate();
+	var DD = (today.getDate() < 10 ? '0' : '') + today.getDate();
+	var mm = today.getMonth()+1; //January is 0!
+	var MM = ((today.getMonth() + 1) < 10 ? '0' : '') + (today.getMonth() + 1);
+	var day = today.getDay();
+	var time = formatAMPM(today)
+	var nowTime = dateObj(time);
+	var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+	var dayName = days[today.getDay()];

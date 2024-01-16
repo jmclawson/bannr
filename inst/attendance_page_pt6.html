@@ -1,0 +1,40 @@
+			var rosterLink = "<a href='" + rosterURL + "&crn=" + classCRN[i] + "'>" + (+i+1) + "</a>";
+			rosterLinks += rosterLink;
+		}
+		return rosterLinks;
+	}
+	
+	
+</script>
+	
+<div class="status">
+  <div class="currently">
+<h2>Currently</h2>
+
+<ul>
+<script>
+	document.write("<li>Day: " + dayName + "</li>");
+	document.write("<li>Time: " + time + "</li>");
+	document.write("<li>CRN: " + nowCRN + "</li>");
+	// document.write("<li>classStart: " + classStart[3].getTime() + "</li>");
+	// document.write("<li>classEnd: " + classEnd[3].getTime() + "</li>");
+	// document.write("<li>nowtime: " + nowTime.getTime() + "</li>");
+</script>
+</ul>
+</div>
+
+<div class="rosters">
+<h2>Rosters</h2>
+<ul>
+	<script>
+		document.write("<li>" + rosterList() + "</li>");
+	</script>
+</ul>
+</div>
+
+</div>
+</div>
+
+</div>
+</body>
+</html> 
