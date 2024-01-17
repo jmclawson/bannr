@@ -41,12 +41,17 @@ On first use, the `authorize()` function will request and store some key values 
 
 ```{r example2, eval=FALSE, include=TRUE}
 current_session <- authorize()
+```
 
-eng375_attendance <- current_session |> 
+Once authorized, package functions combine well with common methods for working with data.
+
+```{r example3, eval=FALSE, include=TRUE}
+library(dplyr)
+eng200_attendance <- current_session |> 
   get_attendances() |>
   process_attendances() |> 
-  filter(course == "Literary Text Mining") |> 
-  select(name, id, attend_rate, attend_last)
+  filter(course == "World Literature") |> 
+  arrange(attend_rate)
 
 all_seniors <- current_session |> 
   get_rosters() |> 
@@ -55,3 +60,15 @@ all_seniors <- current_session |>
   select(course, name, major)
 ```
 
+Although bannr is deliberately limited to functions for retrieving data, thereby avoiding potential pitfalls of bad submissions, it can also help with common tasks such as entering attendance at the beginning of class. The `make_attendance_dashboard()` function prepares an HTML file with direct links to take attendance for classes listed, with today's date filled out:
+
+```{r example4, eval=FALSE, include=TRUE}
+current_session |> 
+  get_attendances() |>
+  process_attendances() |> 
+  make_attendance_dashboard("attendance-dashboard.html")
+```
+
+The resulting dashboard makes is easy to jump to the final step for taking attendance at the start of class---often necessary at universities with high rates of financial aid.
+
+![](inst/attendance-dashboard.gif)
