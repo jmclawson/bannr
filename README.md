@@ -23,61 +23,13 @@ You can install the development version of bannr from
 remotes::install_github("jmclawson/bannr")
 ```
 
-## Loading the package
+## Using the package
 
-After installation, load the package with `library()`:
+After installation, load the package with `library()`. Begin a session
+with `authorize()` and go from there.
 
 ``` r
 library(bannr)
+all_data <- authorize() |> 
+  process_attendances()
 ```
-
-## Starting a session
-
-On first use, the `authorize()` function will request and store some key
-values before logging in to Banner.
-
-``` r
-current_session <- authorize()
-```
-
-## Processing data
-
-Once authorized, package functions combine well with common methods for
-working with data.
-
-``` r
-library(dplyr)
-eng200_attendance <- current_session |> 
-  get_attendances() |>
-  process_attendances() |> 
-  filter(course == "World Literature") |> 
-  arrange(attend_rate)
-
-all_seniors <- current_session |> 
-  get_rosters() |> 
-  flatten_rosters() |> 
-  filter(classification == "Senior") |> 
-  select(course, name, major)
-```
-
-## Making a dashboard
-
-Although bannr is deliberately limited to functions for retrieving data,
-thereby avoiding potential pitfalls of bad submissions, it can also help
-with common tasks such as entering attendance at the beginning of class.
-The `make_attendance_dashboard()` function prepares an HTML file with
-direct links to take attendance for classes listed, with today’s date
-filled out:
-
-``` r
-current_session |> 
-  get_rosters() |> 
-  flatten_rosters() |> 
-  make_attendance_dashboard("attendance-dashboard.html")
-```
-
-The resulting dashboard makes is easy to jump to the final step for
-recording today’s class attendance—often necessary at universities with
-high rates of financial aid.
-
-![](man/figures/attendance-dashboard.gif)
