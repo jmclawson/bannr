@@ -69,6 +69,12 @@ current_session |>
   make_attendance_dashboard("attendance-dashboard.html")
 ```
 
-The resulting dashboard makes is easy to jump to the final step for taking attendance at the start of class---often necessary at universities with high rates of financial aid.
+The resulting dashboard makes is easy to jump to the final step for recording today's class attendance---often necessary at universities with high rates of financial aid.
 
-![](inst/attendance-dashboard.gif)
+```{r dashboard, echo=FALSE}
+"attendance-dashboard.gif" |> 
+    system.file(package = "bannr") |> 
+    knitr::include_graphics()
+```
+
+

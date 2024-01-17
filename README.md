@@ -71,7 +71,7 @@ current_session |>
 ```
 
 The resulting dashboard makes is easy to jump to the final step for
-taking attendance at the start of class—often necessary at universities
-with high rates of financial aid.
+recording today’s class attendance—often necessary at universities with
+high rates of financial aid.
 
-![](inst/attendance-dashboard.gif)
+<img src="../../../../private/var/folders/sy/0bs1ndc90816137f2p8zl_9m0000gn/T/Rtmp8JAJ0w/temp_libpath103f918729c32/bannr/attendance-dashboard.gif" width="100%" />
