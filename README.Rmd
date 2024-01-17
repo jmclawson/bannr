@@ -71,10 +71,4 @@ current_session |>
 
 The resulting dashboard makes is easy to jump to the final step for recording today's class attendance---often necessary at universities with high rates of financial aid.
 
-```{r dashboard, echo=FALSE}
-"attendance-dashboard.gif" |> 
-    system.file(package = "bannr") |> 
-    knitr::include_graphics()
-```
-
 ![](man/figures/attendance-dashboard.gif)
