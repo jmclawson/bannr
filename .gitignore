@@ -6,3 +6,5 @@ docs
 .DS_Store
 attendance-dashboard.html
 inst/doc
+/doc/
+/Meta/

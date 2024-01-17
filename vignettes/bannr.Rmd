@@ -65,6 +65,6 @@ current_session |>
   make_attendance_dashboard("attendance-dashboard.html")
 ```
 
-The resulting dashboard makes is easy to jump to the final step for recording today's class attendance---a task common at many universities, including those serving high numbers of students with financial aid.
+The resulting dashboard makes it easy to jump to the final step for recording today's class attendance, a task required of many instructors.
 
 ![](attendance-dashboard.gif){style="max-width:100%;"}
