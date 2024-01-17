@@ -19,11 +19,11 @@ You can install the development version of bannr from
 [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("jmclawson/bannr")
+# install.packages("remotes")
+remotes::install_github("jmclawson/bannr")
 ```
 
-## Using the package
+## Loading the package
 
 After installation, load the package with `library()`:
 
@@ -31,12 +31,16 @@ After installation, load the package with `library()`:
 library(bannr)
 ```
 
+## Starting a session
+
 On first use, the `authorize()` function will request and store some key
 values before logging in to Banner.
 
 ``` r
 current_session <- authorize()
 ```
+
+## Processing data
 
 Once authorized, package functions combine well with common methods for
 working with data.
@@ -56,6 +60,8 @@ all_seniors <- current_session |>
   select(course, name, major)
 ```
 
+## Making a dashboard
+
 Although bannr is deliberately limited to functions for retrieving data,
 thereby avoiding potential pitfalls of bad submissions, it can also help
 with common tasks such as entering attendance at the beginning of class.
@@ -65,8 +71,8 @@ filled out:
 
 ``` r
 current_session |> 
-  get_attendances() |>
-  process_attendances() |> 
+  get_rosters() |> 
+  flatten_rosters() |> 
   make_attendance_dashboard("attendance-dashboard.html")
 ```
 
