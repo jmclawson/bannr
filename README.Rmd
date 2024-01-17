@@ -77,4 +77,4 @@ The resulting dashboard makes is easy to jump to the final step for recording to
     knitr::include_graphics()
 ```
 
-
+![](man/figures/attendance-dashboard.gif)
