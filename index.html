@@ -36,14 +36,27 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item">
+  <a class="nav-link" href="articles/bannr.html">Get started</a>
+</li>
+<li class="nav-item">
   <a class="nav-link" href="reference/index.html">Reference</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="news/index.html">Changelog</a>
 </li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="search.json" id="search-input" placeholder="Search for" autocomplete="off">
 </form>
 
-      <ul class="navbar-nav"></ul>
+      <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/jmclawson/bannr/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 
     
@@ -65,51 +78,24 @@
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"jmclawson/bannr"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="loading-the-package">Loading the package<a class="anchor" aria-label="anchor" href="#loading-the-package"></a>
+<h2 id="using-the-package">Using the package<a class="anchor" aria-label="anchor" href="#using-the-package"></a>
 </h2>
-<p>After installation, load the package with <code><a href="https://rdrr.io/r/base/library.html" class="external-link">library()</a></code>:</p>
+<p>After installation, load the package with <code><a href="https://rdrr.io/r/base/library.html" class="external-link">library()</a></code>. Begin a session with <code><a href="reference/authorize.html">authorize()</a></code> and go from there.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://jmclawson.github.io/bannr/">bannr</a></span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="starting-a-session">Starting a session<a class="anchor" aria-label="anchor" href="#starting-a-session"></a>
-</h2>
-<p>On first use, the <code><a href="reference/authorize.html">authorize()</a></code> function will request and store some key values before logging in to Banner.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">current_session</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/authorize.html">authorize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="processing-data">Processing data<a class="anchor" aria-label="anchor" href="#processing-data"></a>
-</h2>
-<p>Once authorized, package functions combine well with common methods for working with data.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span><span class="va">eng200_attendance</span> <span class="op">&lt;-</span> <span class="va">current_session</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="reference/get_attendances.html">get_attendances</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="reference/process_attendances.html">process_attendances</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">course</span> <span class="op">==</span> <span class="st">"World Literature"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">attend_rate</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">all_seniors</span> <span class="op">&lt;-</span> <span class="va">current_session</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="reference/get_rosters.html">get_rosters</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="reference/flatten_rosters.html">flatten_rosters</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">classification</span> <span class="op">==</span> <span class="st">"Senior"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">course</span>, <span class="va">name</span>, <span class="va">major</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="making-a-dashboard">Making a dashboard<a class="anchor" aria-label="anchor" href="#making-a-dashboard"></a>
-</h2>
-<p>Although bannr is deliberately limited to functions for retrieving data, thereby avoiding potential pitfalls of bad submissions, it can also help with common tasks such as entering attendance at the beginning of class. The <code><a href="reference/make_attendance_dashboard.html">make_attendance_dashboard()</a></code> function prepares an HTML file with direct links to take attendance for classes listed, with today’s date filled out:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">current_session</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="reference/get_rosters.html">get_rosters</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="reference/flatten_rosters.html">flatten_rosters</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="reference/make_attendance_dashboard.html">make_attendance_dashboard</a></span><span class="op">(</span><span class="st">"attendance-dashboard.html"</span><span class="op">)</span></span></code></pre></div>
-<p>The resulting dashboard makes is easy to jump to the final step for recording today’s class attendance—often necessary at universities with high rates of financial aid.</p>
-<p><img src="reference/figures/attendance-dashboard.gif"></p>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://jmclawson.github.io/bannr/">bannr</a></span><span class="op">)</span></span>
+<span><span class="va">all_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/authorize.html">authorize</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="reference/process_attendances.html">process_attendances</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
-  </main><aside class="col-md-3"><div class="license">
+  </main><aside class="col-md-3"><div class="links">
+<h2 data-toc-skip>Links</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/jmclawson/bannr/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/jmclawson/bannr/issues" class="external-link">Report a bug</a></li>
+</ul>
+</div>
+
+<div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
