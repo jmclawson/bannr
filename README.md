@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# bannr
+# bannr <a href="https://jmclawson.github.io/bannr/"><img src="man/figures/logo.png" align="right" height="139" alt="bannr website" /></a>
 
 <!-- badges: start -->
 <!-- badges: end -->
