@@ -61,18 +61,26 @@
 </h2>
 <p>You can install the development version of bannr from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"jmclawson/bannr"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"jmclawson/bannr"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="using-the-package">Using the package<a class="anchor" aria-label="anchor" href="#using-the-package"></a>
+<h2 id="loading-the-package">Loading the package<a class="anchor" aria-label="anchor" href="#loading-the-package"></a>
 </h2>
 <p>After installation, load the package with <code><a href="https://rdrr.io/r/base/library.html" class="external-link">library()</a></code>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://jmclawson.github.io/bannr/">bannr</a></span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="starting-a-session">Starting a session<a class="anchor" aria-label="anchor" href="#starting-a-session"></a>
+</h2>
 <p>On first use, the <code><a href="reference/authorize.html">authorize()</a></code> function will request and store some key values before logging in to Banner.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">current_session</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/authorize.html">authorize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="processing-data">Processing data<a class="anchor" aria-label="anchor" href="#processing-data"></a>
+</h2>
 <p>Once authorized, package functions combine well with common methods for working with data.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
@@ -87,11 +95,15 @@
 <span>  <span class="fu"><a href="reference/flatten_rosters.html">flatten_rosters</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">classification</span> <span class="op">==</span> <span class="st">"Senior"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">course</span>, <span class="va">name</span>, <span class="va">major</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="making-a-dashboard">Making a dashboard<a class="anchor" aria-label="anchor" href="#making-a-dashboard"></a>
+</h2>
 <p>Although bannr is deliberately limited to functions for retrieving data, thereby avoiding potential pitfalls of bad submissions, it can also help with common tasks such as entering attendance at the beginning of class. The <code><a href="reference/make_attendance_dashboard.html">make_attendance_dashboard()</a></code> function prepares an HTML file with direct links to take attendance for classes listed, with today’s date filled out:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">current_session</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="reference/get_attendances.html">get_attendances</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="reference/process_attendances.html">process_attendances</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="reference/get_rosters.html">get_rosters</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="reference/flatten_rosters.html">flatten_rosters</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="reference/make_attendance_dashboard.html">make_attendance_dashboard</a></span><span class="op">(</span><span class="st">"attendance-dashboard.html"</span><span class="op">)</span></span></code></pre></div>
 <p>The resulting dashboard makes is easy to jump to the final step for recording today’s class attendance—often necessary at universities with high rates of financial aid.</p>
 <p><img src="reference/figures/attendance-dashboard.gif"></p>
