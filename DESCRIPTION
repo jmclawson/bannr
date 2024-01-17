@@ -19,4 +19,9 @@ Imports:
     stringr,
     tibble,
     tidyr
-URL: https://jmclawson.github.io/bannr/
+URL: https://jmclawson.github.io/bannr/, https://github.com/jmclawson/bannr
+BugReports: https://github.com/jmclawson/bannr/issues
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
