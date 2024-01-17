@@ -72,19 +72,29 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://jmclawson.github.io/bannr/">bannr</a></span><span class="op">)</span></span></code></pre></div>
 <p>On first use, the <code><a href="reference/authorize.html">authorize()</a></code> function will request and store some key values before logging in to Banner.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">current_session</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/authorize.html">authorize</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">eng375_attendance</span> <span class="op">&lt;-</span> <span class="va">current_session</span> <span class="op">|&gt;</span> </span>
+<code class="sourceCode R"><span><span class="va">current_session</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/authorize.html">authorize</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>Once authorized, package functions combine well with common methods for working with data.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="va">eng200_attendance</span> <span class="op">&lt;-</span> <span class="va">current_session</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="reference/get_attendances.html">get_attendances</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="reference/process_attendances.html">process_attendances</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">course</span> <span class="op">==</span> <span class="st">"Literary Text Mining"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">select</span><span class="op">(</span><span class="va">name</span>, <span class="va">id</span>, <span class="va">attend_rate</span>, <span class="va">attend_last</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">course</span> <span class="op">==</span> <span class="st">"World Literature"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">attend_rate</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">all_seniors</span> <span class="op">&lt;-</span> <span class="va">current_session</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="reference/get_rosters.html">get_rosters</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="reference/flatten_rosters.html">flatten_rosters</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">classification</span> <span class="op">==</span> <span class="st">"Senior"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">select</span><span class="op">(</span><span class="va">course</span>, <span class="va">name</span>, <span class="va">major</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">classification</span> <span class="op">==</span> <span class="st">"Senior"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">course</span>, <span class="va">name</span>, <span class="va">major</span><span class="op">)</span></span></code></pre></div>
+<p>Although bannr is deliberately limited to functions for retrieving data, thereby avoiding potential pitfalls of bad submissions, it can also help with common tasks such as entering attendance at the beginning of class. The <code><a href="reference/make_attendance_dashboard.html">make_attendance_dashboard()</a></code> function prepares an HTML file with direct links to take attendance for classes listed, with today’s date filled out:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">current_session</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="reference/get_attendances.html">get_attendances</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/process_attendances.html">process_attendances</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="reference/make_attendance_dashboard.html">make_attendance_dashboard</a></span><span class="op">(</span><span class="st">"attendance-dashboard.html"</span><span class="op">)</span></span></code></pre></div>
+<p>The resulting dashboard makes is easy to jump to the final step for taking attendance at the start of class—often necessary at universities with high rates of financial aid.</p>
+<p><img src="inst/attendance-dashboard.gif"></p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="license">
