@@ -76,7 +76,7 @@ make_attendance_dashboard <- function(df, filename = "attendance-dashboard.html"
         days == "TR" ~ 3,
         TRUE ~ 4)) |> 
     dplyr::ungroup() |> 
-    dplyr::arrange(desc(substr(days,1,1)), start_hr) |> 
+    dplyr::arrange(dplyr::desc(substr(days,1,1)), start_hr) |> 
     dplyr::mutate(order = dplyr::row_number()) |> 
     dplyr::mutate(
       name = paste0(

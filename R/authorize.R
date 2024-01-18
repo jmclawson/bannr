@@ -1,4 +1,9 @@
-setup <- function(reset = FALSE){
+setup <- function(reset = FALSE,
+                  save_setup = TRUE){
+  if (file.exists("_bannr-setup.R") & !reset) {
+    load_setup()
+  }
+  
   if (identical(Sys.getenv("bannr_url_base"),"") | reset) {
     if (utils::menu(c("Set it now", "Don't set it now"), title = "No base URL has been saved. For `bannr` to work well, it should be saved as an environmental variable.") == 1) {
       Sys.setenv("bannr_url_base" = readline("What's the base URL?"))
@@ -67,8 +72,65 @@ setup <- function(reset = FALSE){
       message = "Password:",
       title = "Banner Web login")
   }
+  
+  if (!file.exists("_bannr-setup.R")) {
+    answer_1a <- "Save things locally so I don't have to enter them again."
+    answer_1b <- "Save things locally and add a line to .gitignore so they're not shared on my next commit."
+    answer_2 <- "Do not save them. I'll enter them again next time."
+    question <- "You'll have to go through this process again when you start a new R session. To avoid doing so, would you like to save the current term and these Banner URLs in a local file called '_banner-setup.R'? Your username and password will not be part of it, and you can edit it anytime."
+    if (!file.exists(".gitignore")) {
+      prompt_response <- utils::menu(
+        choices = c(answer_1a, 
+                    answer_2), 
+        title = question)
+      if (prompt_response == 1) {
+        save_setup()
+      } 
+    } else if (file.exists(".gitignore")) {
+      prompt_response <- utils::menu(
+        choices = c(answer_1a, 
+                    answer_1b, 
+                    answer_2), 
+        title = question)
+      if (prompt_response == 1) {
+        save_setup()
+      } else if (prompt_response == 2) {
+        save_setup(.gitignore = TRUE)
+      }
+    }
+  }
 
   message("Setup complete!")
+}
+
+load_setup <- function() {
+  variables <- "_bannr-setup.R" |> 
+    readLines() |> 
+    paste(collapse = ",") |> 
+    Sys.setenv()
+}
+
+save_setup <- function(.gitignore = FALSE) {
+  c("bannr_url_base",
+    "bannr_term",
+    "bannr_url_login",
+    "bannr_url_rosters",
+    "bannr_url_attendance_take",
+    "bannr_url_attendances") |> 
+    {\(x) paste0('"', x, '" = "',
+                 Sys.getenv(x),
+                 '"',
+                 collapse = '\n')
+      }() |> 
+    cat(file = "_bannr-setup.R")
+  
+  if (.gitignore) {
+    if (file.exists(".gitignore")) {
+      "_bannr-setup.R" |> 
+        write(file = ".gitignore",
+              append = TRUE)
+    }
+  }
 }
 
 #' Log in to Banner
@@ -145,7 +207,7 @@ check_login <- function(.session){
     stringr::str_detect("^User Login")
 
   if (is_login_page) {
-    stop("You've been logged out.\nUse `authorize()` and try again.", call. = FALSE)
+    stop("This session has been logged out.\nStart a new session with `authorize()` and try again.", call. = FALSE)
   }
 }
 
