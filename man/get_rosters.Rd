@@ -4,12 +4,14 @@
 \alias{get_rosters}
 \title{Get roster data}
 \usage{
-get_rosters(courses, .session = NULL)
+get_rosters(courses, .session = NULL, term = NULL)
 }
 \arguments{
 \item{courses}{A course table}
 
 \item{.session}{(optional) An active \code{rvest} session. If this value is undefined, the session will be derived from an attribute set on \code{courses}}
+
+\item{term}{(optional) The term to be used in this query. If undefined, this value will be inherited from \code{rosters} or from the environmental variable defined at setup.}
 }
 \value{
 A list of items, with one item per course. Each item will identify the course CRN, catalog number, title, schedule, and a table showing the roster of student enrollments. The current \code{rvest} session is attached as an attribute, used for chaining functions together.

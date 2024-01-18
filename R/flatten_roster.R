@@ -19,6 +19,7 @@ flatten_rosters <- function(rosters) {
     dplyr::bind_rows()
 
   attributes(output)$bannr_session <- attributes(rosters)$bannr_session
+  attributes(output)$term <- attributes(rosters)$term
 
   return(output)
 }

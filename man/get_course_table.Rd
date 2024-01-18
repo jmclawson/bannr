@@ -4,10 +4,12 @@
 \alias{get_course_table}
 \title{Get a table of courses}
 \usage{
-get_course_table(.session)
+get_course_table(.session, term = NULL)
 }
 \arguments{
 \item{.session}{An active \code{rvest} session}
+
+\item{term}{(optional) The term to be used in this query. If undefined, this value will be inherited from the environmental variable defined at setup.}
 }
 \value{
 A tibble showing the CRN, title, subject, catalog number, and enrollment for each course. The current \code{rvest} session is attached as an attribute, used for chaining functions together.

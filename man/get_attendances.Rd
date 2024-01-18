@@ -4,12 +4,14 @@
 \alias{get_attendances}
 \title{Get attendance data}
 \usage{
-get_attendances(rosters, .session = NULL)
+get_attendances(rosters, .session = NULL, term = NULL)
 }
 \arguments{
 \item{rosters}{A list of course data. Alternatively, an active \code{rvest} session.}
 
 \item{.session}{(optional) An active \code{rvest} session. If this value is undefined, the session will be derived from an attribute set on \code{rosters}}
+
+\item{term}{(optional) The term to be used in this query. If undefined, this value will be inherited from \code{rosters} or from the environmental variable defined at setup.}
 }
 \value{
 A list of items, with one item per course. Each item will identify the course CRN, catalog number, title, schedule, a table showing the roster of student enrollments, and student attendance records. The current \code{rvest} session is attached as an attribute, used for chaining functions together.

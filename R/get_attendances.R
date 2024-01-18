@@ -2,6 +2,7 @@
 #'
 #' @param rosters A list of course data. Alternatively, an active `rvest` session.
 #' @param .session (optional) An active `rvest` session. If this value is undefined, the session will be derived from an attribute set on `rosters`
+#' @param term (optional) The term to be used in this query. If undefined, this value will be inherited from `rosters` or from the environmental variable defined at setup.
 #'
 #' @returns A list of items, with one item per course. Each item will identify the course CRN, catalog number, title, schedule, a table showing the roster of student enrollments, and student attendance records. The current `rvest` session is attached as an attribute, used for chaining functions together.
 #' @export
@@ -12,18 +13,30 @@
 #'     get_rosters() |>
 #'     get_attendances()
 #' }
-get_attendances <- function(rosters, .session = NULL) {
+get_attendances <- function(
+    rosters, 
+    .session = NULL,
+    term = NULL) {
   if (rvest::is.session(rosters)) {
-    rosters <- get_rosters(rosters)
+    rosters <- get_rosters(rosters, term)
   }
   if (is.null(.session)) {
     .session <- attributes(rosters)$bannr_session
   }
+  if (is.null(term)) {
+    term <- attributes(rosters)$term
+  }
+  
   crns <- names(rosters) |>
     stringr::str_remove_all("crn")
   attendance_rosters <- rosters
+  
+  bannr_url_attendances <- "bannr_url_attendances" |> 
+    Sys.getenv() |> 
+    stringr::str_replace_all(Sys.getenv("bannr_term"), term)
+  
   for (crn in crns) {
-    course_path <- Sys.getenv("bannr_url_attendances") |>
+    course_path <- bannr_url_attendances |>
       paste0("&crn=", crn)
 
     attendance_page <- .session |>
@@ -43,6 +56,7 @@ get_attendances <- function(rosters, .session = NULL) {
   }
 
   attributes(attendance_rosters)$bannr_session <- attendance_page
+  attributes(attendance_rosters)$term <- term
   return(attendance_rosters)
 }
 
@@ -63,7 +77,8 @@ get_attendances <- function(rosters, .session = NULL) {
 #'     process_attendances()
 #' }
 process_attendances <- function(
-    attendance_rosters, include_fridays = TRUE){
+    attendance_rosters, 
+    include_fridays = TRUE){
   if ("list" %in% class(attendance_rosters)) {
     attendance_rosters <- attendance_rosters |>
       flatten_rosters()
@@ -72,6 +87,7 @@ process_attendances <- function(
       get_attendances() |>
       flatten_rosters()
   }
+  term <- attributes(attendance_rosters)$term
 
   clean_days <- function(x, fridays) {
     x <- x |>
@@ -103,7 +119,9 @@ process_attendances <- function(
       attend_last = suppressWarnings(
         max(attend_last, na.rm = TRUE))) |>
     dplyr::ungroup() |>
-    dplyr::mutate(date = format(date, "%a-%h-%d")) |>
+    dplyr::arrange(date) |> 
+    dplyr::mutate(date = format(date, "%a-%h-%d") |> 
+                    forcats::fct_inorder()) |>
     dplyr::select(-c(day, days)) |>
     tidyr::pivot_wider(names_from = date) |>
     dplyr::mutate(
@@ -118,6 +136,7 @@ process_attendances <- function(
     dplyr::arrange(crn, name)
 
   attributes(processed)$bannr_session <- attributes(attendance_rosters)$bannr_session
+  attributes(processed)$term <- term
 
   return(processed)
 }
