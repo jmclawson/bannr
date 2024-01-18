@@ -6,16 +6,15 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-Using rvest and tidyverse tools, bannr helps course instructors get
-clean, actionable data on their courses, their students, and other
-information that can otherwise only be navigated via a web interface in
-the browser. From logging in to exporting attendance records, bannr’s
-goal is to make it easy for instructors to use course data without
-needing to enter things by hand.
+Using rvest and tidyverse tools, bannr helps instructors get clean,
+actionable data on their courses, their students, and other information
+that can otherwise only be retrieved via a web browser. From logging in
+to exporting rosters and attendance records, bannr’s goal is to make it
+easy for instructors to access course data in clean digital formats.
 
 ## Installation
 
-You can install the development version of bannr from
+The latest version of bannr can be installed from
 [GitHub](https://github.com/) with:
 
 ``` r
@@ -30,6 +29,6 @@ with `authorize()` and go from there.
 
 ``` r
 library(bannr)
-all_data <- authorize() |> 
-  process_attendances()
+my_courses <- authorize() |> 
+  get_course_table()
 ```
