@@ -54,7 +54,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_rosters</span><span class="op">(</span><span class="va">courses</span>, .session <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_rosters</span><span class="op">(</span><span class="va">courses</span>, .session <span class="op">=</span> <span class="cn">NULL</span>, term <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -65,6 +65,10 @@
 
 <dt>.session</dt>
 <dd><p>(optional) An active <code>rvest</code> session. If this value is undefined, the session will be derived from an attribute set on <code>courses</code></p></dd>
+
+
+<dt>term</dt>
+<dd><p>(optional) The term to be used in this query. If undefined, this value will be inherited from <code>rosters</code> or from the environmental variable defined at setup.</p></dd>
 
 </dl></div>
     <div class="section level2">
