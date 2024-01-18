@@ -103,17 +103,23 @@ process_attendances <- function(
 
     paste(x, collapse = ", ")
   }
+  
   processed_df <- attendance_rosters |>
     dplyr::select(-c(catalog, start:end, paid:major)) |>
     tidyr::pivot_longer(cols = -c(crn:id),
                  names_to = "date") |>
     dplyr::group_by(crn, id) |>
+    tidyr::drop_na(value) |> 
     dplyr::mutate(
       days = clean_days(days, include_fridays),
       date = lubridate::mdy(date),
       day = lubridate::wday(date, label = TRUE),
-      attend_rate = sum(value == "Y", na.rm = TRUE)/(sum(value == "Y", na.rm = TRUE) + sum(value == "N", na.rm = TRUE)),
+      valid_day = stringr::str_detect(days, as.character(day)),
+      y = sum((value == "Y") * valid_day),
+      n = sum((value == "N") * valid_day),
+      attend_rate = y / (y + n),
       attend_last = dplyr::case_when(value == "Y" ~ date)) |>
+    dplyr::select(-c(y, n, valid_day)) |> 
     dplyr::filter(stringr::str_detect(days, as.character(day))) |>
     dplyr::mutate(
       attend_last = suppressWarnings(

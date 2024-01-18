@@ -10,13 +10,16 @@ end <- temp <- NULL
 enrolled <- temp <- NULL
 id <- temp <- NULL
 major <- temp <- NULL
+n <- temp <- NULL
 name <- temp <- NULL
 other <- temp <- NULL
 paid <- temp <- NULL
 start <- temp <- NULL
 start_hr <- temp <- NULL
 title <- temp <- NULL
+valid_day <- temp <- NULL
 value <- temp <- NULL
+y <- temp <- NULL
 
 #' @keywords internal
 "_PACKAGE"
